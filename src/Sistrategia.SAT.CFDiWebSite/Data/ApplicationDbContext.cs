@@ -35,7 +35,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Data
 
         public virtual DbSet<Cancelacion> Cancelaciones { get; set; }
 
-
+        public virtual DbSet<TipoTipoDeComprobante> TiposTipoDeComprobante { get; set; }
         public virtual DbSet<TipoMetodoDePago> TiposMetodoDePago { get; set; }
         public virtual DbSet<TipoImpuestoTraslado> TiposImpuestoTraslado { get; set; }
         public virtual DbSet<TipoImpuestoRetencion> TiposImpuestoRetencion { get; set; }
@@ -123,6 +123,13 @@ namespace Sistrategia.SAT.CFDiWebSite.Data
         //public virtual DbSet<TipoImpuestoTraslado> TiposImpuestoTraslado { get; set; }
         //public virtual DbSet<TipoImpuestoRetencion> TiposImpuestoRetencion { get; set; }
 
+            var tipoTipoDeComprobante = modelBuilder.Entity<TipoTipoDeComprobante>()
+               .ToTable("sat_tipo_tipo_de_comprobante");
+            tipoTipoDeComprobante.Property(p => p.TipoTipoDeComprobanteId)
+                .HasColumnName("tipo_tipo_de_comprobante_id");
+            tipoTipoDeComprobante.Property(p => p.TipoTipoDeComprobanteValue)
+                .HasColumnName("tipo_tipo_de_comprobante_value");
+
         var tipoMetodoDePago = modelBuilder.Entity<TipoMetodoDePago>()
             .ToTable("sat_tipo_metodo_de_pago");
             tipoMetodoDePago.Property(p => p.TipoMetodoDePagoId)
@@ -204,8 +211,8 @@ namespace Sistrategia.SAT.CFDiWebSite.Data
 
             emisor.Property(p => p.DomicilioFiscalId)
                 .HasColumnName("domicilio_fiscal_id");
-            emisor.Property(p => p.ExpedidoEnId)
-                .HasColumnName("expedido_en_id");
+            //emisor.Property(p => p.ExpedidoEnId)
+            //    .HasColumnName("expedido_en_id");
 
             emisor.Property(p => p.Telefono)
                 .HasColumnName("telefono");
@@ -265,11 +272,25 @@ namespace Sistrategia.SAT.CFDiWebSite.Data
                 .IsOptional() // .IsRequired() // Requerido
                 .HasMaxLength(2048);
 
+            ubicacion.Property(p => p.Status)
+                .HasColumnName("status")
+                .HasMaxLength(50);
+            
 
-            modelBuilder.Entity<Ubicacion>()
+            //ubicacion.Property(p => p.EmisorId)
+            //    .HasColumnName("emisor_id");
+
+
+            //modelBuilder.Entity<Ubicacion>()
+            ubicacion
                 .Map<Ubicacion>(m => m.Requires("ubicacion_type").HasValue("Ubicacion"))
                 .Map<UbicacionFiscal>(m => m.Requires("ubicacion_type").HasValue("UbicacionFiscal"))
                 .ToTable("sat_ubicacion");
+
+
+            emisor.HasMany<Ubicacion>(e => e.Domicilios)
+                .WithOptional()
+                .Map(m => m.MapKey("emisor_id"));
 
             //modelBuilder.Entity<UbicacionFiscal>().Map(m =>
             //{
@@ -515,8 +536,15 @@ namespace Sistrategia.SAT.CFDiWebSite.Data
             //comprobante.Ignore(p => p.MontoFolioFiscalOrigSpecified);
             comprobante.Property(p => p.EmisorId)
                 .HasColumnName("emisor_id");
+            comprobante.Property(p => p.DomicilioFiscalId)
+                .HasColumnName("domicilio_fiscal_id");            
+            comprobante.Property(p => p.ExpedidoEnId)
+                .HasColumnName("expedido_en_id");
             comprobante.Property(p => p.ReceptorId)
                 .HasColumnName("receptor_id");
+
+            comprobante.Property(p => p.ReceptorDomicilioId)
+                .HasColumnName("receptor_domicilio_id");
 
             comprobante.Ignore(p => p.DecimalFormat);
 

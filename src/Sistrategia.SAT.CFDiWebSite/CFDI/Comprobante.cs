@@ -874,6 +874,44 @@ namespace Sistrategia.SAT.CFDiWebSite.CFDI
         //    set { this.emisor = value; }
         //}
 
+        [ForeignKey("DomicilioFiscal")]
+        public int? DomicilioFiscalId { get; set; }
+
+        /// <summary>
+        /// Nodo opcional para precisar la información de ubicación del domicilio fiscal del contribuyente emisor.
+        /// </summary>
+        /// <remarks>
+        /// Antes era requerido
+        /// <code>
+        /// <xs:element name="DomicilioFiscal" type="cfdi:t_UbicacionFiscal" minOccurs="0">
+        ///     <xs:annotation>
+        ///         <xs:documentation>Nodo opcional para precisar la información de ubicación del domicilio fiscal del contribuyente emisor</xs:documentation>
+        ///     </xs:annotation>
+        /// </xs:element>
+        /// </code>
+        /// </remarks>
+        //[XmlElement("DomicilioFiscal")]
+        public virtual UbicacionFiscal DomicilioFiscal { get; set; }
+
+        [ForeignKey("ExpedidoEn")]
+        public int? ExpedidoEnId { get; set; }
+
+        /// <summary>
+        /// Nodo opcional para precisar la información de ubicación del domicilio en donde es emitido 
+        /// el comprobante fiscal en caso de que sea distinto del domicilio fiscal del contribuyente emisor.
+        /// </summary>
+        /// <remarks>
+        /// <code>
+        /// <xs:element name="ExpedidoEn" type="cfdi:t_Ubicacion" minOccurs="0">
+        ///     <xs:annotation>
+        ///         <xs:documentation>Nodo opcional para precisar la información de ubicación del domicilio en donde es emitido el comprobante fiscal en caso de que sea distinto del domicilio fiscal del contribuyente emisor.</xs:documentation>
+        ///     </xs:annotation>
+        /// </xs:element>
+        /// </code>
+        /// </remarks>
+        //[XmlElement("ExpedidoEn")]
+        public virtual Ubicacion ExpedidoEn { get; set; }
+
         [ForeignKey("Receptor")]
         public int? ReceptorId { get; set; }
 
@@ -886,6 +924,28 @@ namespace Sistrategia.SAT.CFDiWebSite.CFDI
         //    get { return this.receptor; }
         //    set { this.receptor = value; }
         //}
+
+        [ForeignKey("ReceptorDomicilio")]
+        public int? ReceptorDomicilioId { get; set; }
+
+        /// <summary>
+        /// Nodo opcional para la definición de la ubicación donde se da el domicilio del receptor del comprobante fiscal.
+        /// </summary>
+        /// <remarks>
+        /// <code>
+        /// <xs:sequence>
+        ///   <xs:element name="Domicilio" type="cfdi:t_Ubicacion" minOccurs="0">
+        ///     <xs:annotation>
+        ///       <xs:documentation>
+        ///         Nodo opcional para la definición de la ubicación donde se da el domicilio del receptor del comprobante fiscal.
+        ///       </xs:documentation>
+        ///     </xs:annotation>
+        ///   </xs:element>
+        /// </xs:sequence>
+        /// </code>
+        /// </remarks>
+        [XmlElement("Domicilio")]
+        public virtual Ubicacion ReceptorDomicilio { get;set; }
 
         /// <summary>
         /// Nodo para introducir la información detallada de un bien o servicio amparado en el comprobante.

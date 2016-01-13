@@ -38,6 +38,13 @@ namespace Sistrategia.SAT.CFDiWebSite.Migrations
             );
             context.SaveChanges();
 
+            context.TiposTipoDeComprobante.AddOrUpdate(
+                t => t.TipoTipoDeComprobanteValue,
+                new TipoTipoDeComprobante { TipoTipoDeComprobanteId = 1, TipoTipoDeComprobanteValue = "ingreso" },
+                new TipoTipoDeComprobante { TipoTipoDeComprobanteId = 1, TipoTipoDeComprobanteValue = "egreso" },
+                new TipoTipoDeComprobante { TipoTipoDeComprobanteId = 1, TipoTipoDeComprobanteValue = "traslado" }
+                );
+
             context.TiposMetodoDePago.AddOrUpdate(
                 t => t.TipoMetodoDePagoValue,
                 new TipoMetodoDePago { TipoMetodoDePagoId = 1, TipoMetodoDePagoValue = "EFECTIVO" },

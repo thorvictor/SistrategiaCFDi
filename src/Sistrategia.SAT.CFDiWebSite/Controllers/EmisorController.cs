@@ -119,7 +119,9 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
 
             if (model.ExpedidoEn != null) {
                 if (!string.IsNullOrEmpty(model.ExpedidoEn.Pais)) {
-                    emisor.ExpedidoEn = new Ubicacion {
+                    emisor.Domicilios = new List<Ubicacion>();
+                    emisor.Domicilios.Add(new Ubicacion {
+                    //emisor.ExpedidoEn = new Ubicacion {
                         Pais = model.ExpedidoEn.Pais,
                         Calle = string.IsNullOrEmpty(model.ExpedidoEn.Calle) ? null : model.ExpedidoEn.Calle,
                         NoExterior = string.IsNullOrEmpty(model.ExpedidoEn.NoExterior) ? null : model.ExpedidoEn.NoExterior,
@@ -130,7 +132,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
                         Estado = string.IsNullOrEmpty(model.ExpedidoEn.Estado) ? null : model.ExpedidoEn.Estado,
                         CodigoPostal = string.IsNullOrEmpty(model.ExpedidoEn.CodigoPostal) ? null : model.ExpedidoEn.CodigoPostal,
                         Referencia = string.IsNullOrEmpty(model.ExpedidoEn.Referencia) ? null : model.ExpedidoEn.Referencia
-                    };
+                    });
                 }
             }            
 
@@ -249,7 +251,9 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
 
                 //if (model.ExpedidoEn != null) {
                     if (!string.IsNullOrEmpty(model.ExpedidoEnPais)) {
-                        newEmisor.ExpedidoEn = new Ubicacion {
+                        newEmisor.Domicilios = new List<Ubicacion>();
+                        newEmisor.Domicilios.Add(new Ubicacion {
+                        //newEmisor.ExpedidoEn = new Ubicacion {
                             Pais = model.ExpedidoEnPais,
                             Calle = string.IsNullOrEmpty(model.ExpedidoEnCalle) ? null : model.ExpedidoEnCalle,
                             NoExterior = string.IsNullOrEmpty(model.ExpedidoEnNoExterior) ? null : model.ExpedidoEnNoExterior,
@@ -260,7 +264,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
                             Estado = string.IsNullOrEmpty(model.ExpedidoEnEstado) ? null : model.ExpedidoEnEstado,
                             CodigoPostal = string.IsNullOrEmpty(model.ExpedidoEnCodigoPostal) ? null : model.ExpedidoEnCodigoPostal,
                             Referencia = string.IsNullOrEmpty(model.ExpedidoEnReferencia) ? null : model.ExpedidoEnReferencia
-                        };
+                        });
                     }
                 //}
 
